@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi tienda</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      }
+
+    html {
+    scroll-behavior: smooth;
+    }
+
+    body {
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #f3f5f2;
+    color: #171a18;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    }
+
+    /* =========================================
+    ENCABEZADO
+    ========================================= */
+
+    h1 {
+    margin: 0;
+    padding: 55px 20px 15px;
+
+    background:
+    radial-gradient(
+    circle at 80% 20%,
+    rgba(157, 255, 77, 0.16),
+    transparent 30%
+    ),
+    linear-gradient(135deg, #080a09, #151a16);
+
+    color: white;
+
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.20);
+    }
+
+    /* =========================================
+    SLOGAN
+    ========================================= */
+
+    .slogan {
+    margin: 0;
+    padding: 0 20px 45px;
+
+    background: #151a16;
+
+    color: #c6ccc8;
+
+    font-size: 18px;
+    line-height: 1.6;
+    }
+
+    /* =========================================
+    BARRA DE BENEFICIOS
+    ========================================= */
+
+    .beneficios {
+    max-width: 1050px;
+
+    margin: -20px auto 50px;
+
+    padding: 20px;
+
+    position: relative;
+    z-index: 5;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e8e3;
+    border-radius: 14px;
+
+    box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.08),
+    0 3px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .beneficios span {
+    padding: 10px 18px;
+
+    color: #454b46;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border-right: 1px solid #e4e6e3;
+    }
+
+    .beneficios span:last-child {
+    border-right: none;
+    }
+
+    /* =========================================
+    CATÁLOGO
+    ========================================= */
+
+    #productos {
+    max-width: 1200px;
+
+    margin: 0 auto 70px;
+
+    padding: 0 25px;
+
+    display: grid;
+
+    grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 25px;
+
+    align-items: stretch;
+    }
+
+    /* =========================================
+    TARJETAS DE PRODUCTOS
+    ========================================= */
+
+    .producto {
+    position: relative;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e8e3;
+
+    border-radius: 16px;
+
+    padding: 15px;
+
+    text-align: left;
+
+    overflow: hidden;
+
+    box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.04),
+    0 2px 5px rgba(0, 0, 0, 0.03);
+
+    transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+    }
+
+    /* Efecto hover */
+
+    .producto:hover {
+    transform: translateY(-8px);
+
+    border-color: #9dff4d;
+
+    box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.11),
+    0 5px 15px rgba(157, 255, 77, 0.10);
+    }
+
+    /* Línea superior decorativa */
+
+    .producto::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: #9dff4d;
+
+    transform: scaleX(0);
+
+    transform-origin: left;
+
+    transition: transform 0.3s ease;
+    }
+
+    .producto:hover::before {
+    transform: scaleX(1);
+    }
+
+    /* =========================================
+    IMÁGENES
+    ========================================= */
+
+    .producto img {
+    width: 100%;
+    height: 190px;
+
+    object-fit: cover;
+
+    border-radius: 11px;
+
+    background: #f1f3ef;
+
+    transition: transform 0.4s ease;
+    }
+
+    .producto:hover img {
+    transform: scale(1.03);
+    }
+
+    /* =========================================
+    NOMBRE PRODUCTO
+    ========================================= */
+
+    .producto h3 {
+    margin: 18px 5px 8px;
+
+    font-size: 19px;
+
+    font-weight: 800;
+
+    color: #171a18;
+    }
+
+    /* =========================================
+    DESCRIPCIÓN
+    ========================================= */
+
+    .descripcion {
+    margin: 0 5px;
+
+    min-height: 42px;
+
+    color: #737873;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+    }
+
+    /* =========================================
+    PRECIO
+    ========================================= */
+
+    .precio {
+    margin: 16px 5px 10px;
+
+    color: #171a18;
+
+    font-size: 23px;
+
+    font-weight: 900;
+    }
+
+    /* =========================================
+    BOTÓN AGREGAR
+    ========================================= */
+
+    .producto button {
+    width: calc(100% - 10px);
+
+    margin: 8px 5px 5px;
+
+    padding: 12px 15px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #171a18;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+    }
+
+    .producto button:hover {
+    background: #9dff4d;
+
+    color: #10130f;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+    0 8px 20px rgba(157, 255, 77, 0.25);
+    }
+
+    /* =========================================
+    CARRITO
+    ========================================= */
+
+    .carrito {
+    width: min(900px, calc(100% - 40px));
+
+    margin: 0 auto 80px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e5e0;
+
+    border-radius: 18px;
+
+    text-align: left;
+
+    box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.08),
+    0 5px 15px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Título carrito */
+
+    .carrito h2 {
+    margin: 0 0 25px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #e7e9e6;
+
+    color: #171a18;
+
+    font-size: 25px;
+    }
+
+    /* =========================================
+    LISTA CARRITO
+    ========================================= */
+
+    #lista-carrito {
+    margin: 0;
+
+    padding-left: 22px;
+    }
+
+    #lista-carrito li {
+    margin-bottom: 12px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    background: #f7f8f6;
+
+    color: #454945;
+
+    transition: background 0.2s ease;
+    }
+
+    #lista-carrito li:hover {
+    background: #eef5e9;
+    }
+
+    /* =========================================
+    RESUMEN
+    ========================================= */
+
+    .resumen {
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e2e5e1;
+    }
+
+    .resumen p {
+    color: #6e746f;
+
+    font-size: 15px;
+    }
+
+    .resumen strong {
+    color: #171a18;
+    }
+
+    .total {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 18px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #e2e5e1;
+
+    color: #171a18 !important;
+
+    font-size: 24px !important;
+
+    font-weight: 900;
+    }
+
+    /* =========================================
+    BOTONES DEL CARRITO
+    ========================================= */
+
+    .vaciar,
+    .finalizar {
+    padding: 13px 20px;
+
+    margin-top: 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+    }
+
+    /* Vaciar */
+
+    .vaciar {
+    background: #eef0ed;
+
+    color: #454945;
+    }
+
+    .vaciar:hover {
+    background: #e1e4e0;
+
+    transform: translateY(-2px);
+    }
+
+    /* Finalizar */
+
+    .finalizar {
+    margin-left: 8px;
+
+    background: #171a18;
+
+    color: #ffffff;
+    }
+
+    .finalizar:hover {
+    background: #9dff4d;
+
+    color: #10130f;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+    0 8px 20px rgba(157, 255, 77, 0.25);
+    }
+
+    /* =========================================
+    DETALLES DECORATIVOS
+    ========================================= */
+
+    .carrito::before {
+    content: "🏋️";
+
+    float: right;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef6e8;
+
+    border-radius: 50%;
+
+    font-size: 22px;
+    }
+
+    /* =========================================
+    RESPONSIVE TABLET
+    ========================================= */
+
+    @media (max-width: 800px) {
+
+    h1 {
+    font-size: 34px;
+
+    ```
+    padding-top: 40px;
+    ```
+
+    }
+
+    .beneficios {
+    margin-left: 20px;
+    margin-right: 20px;
+    }
+
+    .beneficios span {
+    border-right: none;
+
+    ```
+    border-bottom: 1px solid #eeeeee;
+    ```
+
+    }
+
+    #productos {
+    grid-template-columns:
+    repeat(2, minmax(200px, 1fr));
+
+    ```
+    padding: 0 20px;
+    ```
+
+    }
+    }
+
+    /* =========================================
+    RESPONSIVE CELULAR
+    ========================================= */
+
+    @media (max-width: 550px) {
+
+    body {
+    overflow-x: hidden;
+    }
+
+    h1 {
+    font-size: 28px;
+
+    ```
+    line-height: 1.2;
+
+    padding: 35px 18px 15px;
+    ```
+
+    }
+
+    .slogan {
+    padding: 0 20px 35px;
+
+    ```
+    font-size: 15px;
+    ```
+
+    }
+
+    .beneficios {
+    flex-direction: column;
+
+    ```
+    align-items: stretch;
+
+    margin:
+      -15px 15px 40px;
+
+    padding: 10px;
+    ```
+
+    }
+
+    .beneficios span {
+    text-align: center;
+
+    ```
+    border-right: none;
+    ```
+
+    }
+
+    #productos {
+    grid-template-columns: 1fr;
+
+    ```
+    gap: 20px;
+
+    padding: 0 20px;
+    ```
+
+    }
+
+    .producto {
+    max-width: 420px;
+
+    ```
+    width: 100%;
+
+    margin: 0 auto;
+    ```
+
+    }
+
+    .producto img {
+    height: 220px;
+    }
+
+    .carrito {
+    width: calc(100% - 30px);
+
+    ```
+    padding: 22px;
+
+    margin-bottom: 50px;
+    ```
+
+    }
+
+    .carrito h2 {
+    font-size: 22px;
+    }
+
+    .total {
+    font-size: 21px !important;
+    }
+
+    .vaciar,
+    .finalizar {
+    width: 100%;
+
+    ```
+    margin-left: 0;
+
+    margin-right: 0;
+    ```
+
+    }
+
+    .finalizar {
+    margin-top: 10px;
+    }
+    }
+
+  </style>
+</head>
+<body>
+  <h1>💪 Ecommerce Suplementos Deportivos 🏋️ - Felipe Rincón</h1>
+
+  <p class="slogan">
+   Potencia tu entrenamiento y alcanza tus objetivos 🏋️🔥
+  </p>
+
+  <div class="beneficios">
+    <span>🚚 Envíos en Bogotá</span>
+    <span>🔒 Compra segura</span>
+    <span>📦 Seguimiento de pedido</span>
+  </div>
+
+  <div id="productos"></div>
+
+  <div class="carrito">
+    <h2>🧾 Carrito de Compras</h2>
+
+    <ul id="lista-carrito"></ul>
+
+    <div class="resumen">
+      <p>
+        Envío: <strong>Gratis</strong>
+      </p>
+
+      <p class="total">
+        Total: $<span id="total">0</span>
+      </p>
+    </div>
+
+    <button class="vaciar" onclick="vaciarCarrito()">
+      🧼 Vaciar Carrito
+    </button>
+
+    <button class="finalizar" onclick="finalizarCompra()">
+      ✅ Finalizar Compra
+    </button>
+  </div>
+
+  <script>
+    const productos = [
+      {
+        id: 1,
+        nombre: "Proteína En Polvo",
+        descripcion: "💪 Potencia tu entrenamiento y alcanza tus objetivos. 🔥",
+        precio: 135000,
+        imagen: "https://media.revistagq.com/photos/652e593beb42852a34788555/3:4/w_748%2Cc_limit/Scitec%2520Nutrition.jpg"
+      },
+      {
+        id: 2,
+        nombre: "Aminoácidos en Polvo",
+        descripcion: "💪 Más energía, mejor recuperación y todo por tus objetivos. 🔥",
+        precio: 80000,
+        imagen: "https://zonafit.co/cdn/shop/files/Amino_X_BSN_30_Serv_Fruit_Punch_0c53f3ac-9e32-4570-8b4a-1afbc701d517.webp?v=1786379024"
+      },
+      {
+        id: 3,
+        nombre: "Creatina En Polvo",
+        descripcion: "💪 Más fuerza, más rendimiento, mejores resultados. 🔥",
+        precio: 98000,
+        imagen: "https://contents.mediadecathlon.com/p2772905/k$5d024cac783cb49e91608c2f2d429fbe/creatina-healthy-sports-100-dosis.jpg"
+      },
+      {
+        id: 4,
+        nombre: "Multivitaminícos",
+        descripcion: "💪 Recarga tu cuerpo, recupera y rinde mejor en cada entrenamiento. ⚡",
+        precio: 45000,
+        imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK1GoD_MO2oZWKkA5BYAFiovB2HWDj7AZ2hB0INe5nOA&s=10"
+      },
+      {
+        id: 5,
+        nombre: "Pre Entreno Gold Standard",
+        descripcion: "⚡ Activa tu energía y entrena con más intensidad. 💪🔥",
+        precio: 85000,
+        imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC5hhcAP8vJLh3d7rE_VZ1_danRfwz36_CWSTTN9YdVQ&s=10"
+      }
+    ];
+
+
+    /* ==============================
+       CARRITO
+    ================================ */
+
+    const carrito = [];
+
+    const contenedorProductos = document.getElementById("productos");
+    const listaCarrito = document.getElementById("lista-carrito");
+    const totalCarrito = document.getElementById("total");
+
+
+    /* ==============================
+       MOSTRAR PRODUCTOS
+    ================================ */
+
+    function mostrarProductos() {
+
+      contenedorProductos.innerHTML = "";
+
+      productos.forEach(prod => {
+
+        const div = document.createElement("div");
+
+        div.className = "producto";
+
+        div.innerHTML = `
+          <img src="${prod.imagen}" alt="${prod.nombre}">
+
+          <h3>${prod.nombre}</h3>
+
+          <p class="descripcion">
+            ${prod.descripcion}
+          </p>
+
+          <p class="precio">
+            ${prod.precio.toLocaleString("es-CO", {
+              style: "currency",
+              currency: "COP",
+              minimumFractionDigits: 0
+            })}
+          </p>
+
+          <button onclick="agregarAlCarrito(${prod.id})">
+            Agregar al carrito
+          </button>
+        `;
+
+        contenedorProductos.appendChild(div);
+
+      });
+
+    }
+
+
+    /* ==============================
+       AGREGAR AL CARRITO
+    ================================ */
+
+    function agregarAlCarrito(id) {
+
+      const productoExistente =
+        carrito.find(p => p.id === id);
+
+      if (productoExistente) {
+
+        productoExistente.cantidad++;
+
+      } else {
+
+        const producto =
+          productos.find(p => p.id === id);
+
+        carrito.push({
+          ...producto,
+          cantidad: 1
+        });
+
+      }
+
+      actualizarCarrito();
+
+    }
+
+
+    /* ==============================
+       ACTUALIZAR CARRITO
+    ================================ */
+
+    function actualizarCarrito() {
+
+      listaCarrito.innerHTML = "";
+
+      let total = 0;
+      let totalItems = 0;
+
+      carrito.forEach(item => {
+
+        const li =
+          document.createElement("li");
+
+        const subtotal =
+          item.precio * item.cantidad;
+
+        li.textContent =
+          `${item.nombre} x${item.cantidad} — ` +
+          subtotal.toLocaleString("es-CO", {
+            style: "currency",
+            currency: "COP",
+            minimumFractionDigits: 0
+          });
+
+        listaCarrito.appendChild(li);
+
+        total += subtotal;
+        totalItems += item.cantidad;
+
+      });
+
+      totalCarrito.textContent =
+        total.toLocaleString("es-CO");
+
+      actualizarTituloCarrito(totalItems);
+
+    }
+
+
+    /* ==============================
+       CONTADOR DEL CARRITO
+    ================================ */
+
+    function actualizarTituloCarrito(cantidad) {
+
+      const titulo =
+        document.querySelector(".carrito h2");
+
+      titulo.textContent =
+        `🧾 Carrito de Compras (${cantidad})`;
+
+    }
+
+
+    /* ==============================
+       VACIAR CARRITO
+    ================================ */
+
+    function vaciarCarrito() {
+
+      if (carrito.length === 0) {
+
+        alert("🛒 El carrito ya está vacío.");
+
+        return;
+
+      }
+
+      if (
+        confirm(
+          "¿Estás seguro de que quieres vaciar el carrito?"
+        )
+      ) {
+
+        carrito.length = 0;
+
+        actualizarCarrito();
+
+      }
+
+    }
+
+
+    /* ==============================
+       FINALIZAR COMPRA
+    ================================ */
+
+    function finalizarCompra() {
+
+      if (carrito.length === 0) {
+
+        alert(
+          "🛒 Tu carrito está vacío. Agrega productos antes de finalizar la compra."
+        );
+
+        return;
+
+      }
+
+      alert(
+        "🎉 ¡Pedido simulado confirmado!\n\n" +
+        "En un eCommerce real, ahora entrarían en acción " +
+        "el backend, la pasarela de pago y la logística."
+      );
+
+      carrito.length = 0;
+
+      actualizarCarrito();
+
+    }
+
+
+    /* ==============================
+       INICIAR TIENDA
+    ================================ */
+
+    mostrarProductos();
+  </script>
+</body>
+</html>
